@@ -2,6 +2,7 @@ package com.hyk.univ.common.exception;
 
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,7 +29,8 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(AccessDeniedException.class)
   public ResponseEntity<?> handleAccessDenied(AccessDeniedException ex) {
-    return ResponseEntity.status(403).body(Map.of("code", "FORBIDDEN", "message", "access denied"));
+    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        .body(Map.of("code", "FORBIDDEN", "message", "access denied"));
   }
 
   @ExceptionHandler(Exception.class)

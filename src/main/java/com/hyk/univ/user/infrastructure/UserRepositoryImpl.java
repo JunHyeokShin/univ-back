@@ -45,4 +45,9 @@ public class UserRepositoryImpl implements UserRepository {
     this.jpaUserRepository.deleteById(id);
   }
 
+  @Override
+  public String findMaxStudentNumberByYearPrefix(String yearPrefix) {
+    return this.jpaUserRepository.findMaxStudentNumberByYearPrefix(yearPrefix);
+  }
+
 }

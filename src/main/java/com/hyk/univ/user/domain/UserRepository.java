@@ -17,4 +17,6 @@ public interface UserRepository {
 
   void deleteById(Long id);
 
+  String findMaxStudentNumberByYearPrefix(String yearPrefix);
+
 }
