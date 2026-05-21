@@ -9,7 +9,7 @@ import com.hyk.univ.schedule.domain.AcademicSchedule;
 import com.hyk.univ.schedule.domain.AcademicScheduleRepository;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class ScheduleService {
 
@@ -19,6 +19,7 @@ public class ScheduleService {
     return this.academicScheduleRepository.getCurrent().getCurrentMode();
   }
 
+  @Transactional
   public void changeMode(AcademicMode mode) {
     AcademicSchedule schedule = this.academicScheduleRepository.getCurrent();
     schedule.changeMode(mode);

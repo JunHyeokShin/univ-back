@@ -13,14 +13,19 @@ public class AcademicScheduleRepositoryImpl implements AcademicScheduleRepositor
   private final JpaAcademicScheduleRepository jpaAcademicScheduleRepository;
 
   @Override
-  public AcademicSchedule getCurrent() {
-    return this.jpaAcademicScheduleRepository.findById(1L)
-        .orElseGet(() -> this.jpaAcademicScheduleRepository.save(AcademicSchedule.initial()));
+  public AcademicSchedule save(AcademicSchedule schedule) {
+    return this.jpaAcademicScheduleRepository.save(schedule);
   }
 
   @Override
-  public AcademicSchedule save(AcademicSchedule schedule) {
-    return this.jpaAcademicScheduleRepository.save(schedule);
+  public AcademicSchedule getCurrent() {
+    return this.jpaAcademicScheduleRepository.findById(1L)
+        .orElseThrow(() -> new IllegalStateException("학사 일정이 초기화되지 않았습니다."));
+  }
+
+  @Override
+  public boolean existsById(Long id) {
+    return this.jpaAcademicScheduleRepository.existsById(id);
   }
 
 }
