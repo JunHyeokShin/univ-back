@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hyk.univ.common.security.AuthUser;
 import com.hyk.univ.course.application.CourseService;
 import com.hyk.univ.course.application.dto.CourseResponse;
 import com.hyk.univ.course.application.dto.CreateCourseRequest;
@@ -36,6 +38,12 @@ public class CourseController {
   @GetMapping("/{id}")
   public ResponseEntity<CourseResponse> get(@PathVariable Long id) {
     return ResponseEntity.ok(this.courseService.findById(id));
+  }
+
+  @PreAuthorize("hasRole('PROFESSOR')")
+  @GetMapping("/mine")
+  public ResponseEntity<List<CourseResponse>> myCourses(@AuthenticationPrincipal AuthUser user) {
+    return ResponseEntity.ok(this.courseService.findByProfessor(user.userId()));
   }
 
   @PreAuthorize("hasRole('ADMIN')")
