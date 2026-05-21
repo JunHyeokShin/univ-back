@@ -1,6 +1,7 @@
 package com.hyk.univ.user.application;
 
 import java.time.Year;
+import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,12 @@ public class AccountAdminService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+
+  public List<UserResponse> findAll() {
+    return this.userRepository.findAll().stream()
+        .map(UserResponse::from)
+        .toList();
+  }
 
   public UserResponse createStudent(CreateStudentRequest request) {
     String studentNumber = generateNextStudentNumber();

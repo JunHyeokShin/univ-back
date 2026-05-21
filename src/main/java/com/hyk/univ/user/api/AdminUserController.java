@@ -1,11 +1,14 @@
 package com.hyk.univ.user.api;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,11 @@ import com.hyk.univ.user.application.dto.UserResponse;
 public class AdminUserController {
 
   private final AccountAdminService accountAdminService;
+
+  @GetMapping
+  public ResponseEntity<List<UserResponse>> findAll() {
+    return ResponseEntity.ok(this.accountAdminService.findAll());
+  }
 
   @PostMapping("/students")
   public ResponseEntity<UserResponse> createStudent(@Valid @RequestBody CreateStudentRequest request) {
