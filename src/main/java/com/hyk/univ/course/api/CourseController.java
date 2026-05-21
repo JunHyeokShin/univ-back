@@ -52,4 +52,11 @@ public class CourseController {
     return ResponseEntity.status(HttpStatus.CREATED).body(this.courseService.openCourse(request));
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
+  @PostMapping("/{id}/close")
+  public ResponseEntity<Void> close(@PathVariable Long id) {
+    this.courseService.closeCourse(id);
+    return ResponseEntity.noContent().build();
+  }
+
 }

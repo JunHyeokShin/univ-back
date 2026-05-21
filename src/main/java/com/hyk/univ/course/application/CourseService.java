@@ -52,4 +52,11 @@ public class CourseService {
     return CourseResponse.from(this.courseRepository.save(course));
   }
 
+  @Transactional
+  public void closeCourse(Long courseId) {
+    Course course = this.courseRepository.findById(courseId)
+        .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
+    course.close();
+  }
+
 }
