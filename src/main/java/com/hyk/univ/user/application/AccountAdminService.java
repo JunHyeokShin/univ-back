@@ -25,6 +25,7 @@ public class AccountAdminService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
+  @Transactional(readOnly = true)
   public List<UserResponse> findAll() {
     return this.userRepository.findAll().stream()
         .map(UserResponse::from)
@@ -57,6 +58,13 @@ public class AccountAdminService {
     User user = User.createAdmin(request.username(), this.passwordEncoder.encode(request.password()),
         request.name(), request.contact());
     return UserResponse.from(this.userRepository.save(user));
+  }
+
+  public void deleteUser(Long id) {
+    if (!this.userRepository.existsById(id)) {
+      throw new BusinessException(ErrorCode.USER_NOT_FOUND);
+    }
+    this.userRepository.deleteById(id);
   }
 
   private String generateNextStudentNumber() {

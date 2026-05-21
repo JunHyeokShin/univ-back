@@ -13,6 +13,8 @@ public interface UserRepository {
 
   List<User> findAll();
 
+  boolean existsById(Long id);
+
   boolean existsByLoginId(String loginId);
 
   void deleteById(Long id);
