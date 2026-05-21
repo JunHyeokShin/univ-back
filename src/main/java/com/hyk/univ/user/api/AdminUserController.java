@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hyk.univ.user.application.AccountAdminService;
+import com.hyk.univ.user.application.dto.CreateAdminRequest;
 import com.hyk.univ.user.application.dto.CreateProfessorRequest;
 import com.hyk.univ.user.application.dto.CreateStudentRequest;
 import com.hyk.univ.user.application.dto.UserResponse;
@@ -32,6 +33,11 @@ public class AdminUserController {
   @PostMapping("/professors")
   public ResponseEntity<UserResponse> createProfessor(@Valid @RequestBody CreateProfessorRequest request) {
     return ResponseEntity.status(HttpStatus.CREATED).body(this.accountAdminService.createProfessor(request));
+  }
+
+  @PostMapping("/admins")
+  public ResponseEntity<UserResponse> createAdmin(@Valid @RequestBody CreateAdminRequest request) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(this.accountAdminService.createAdmin(request));
   }
 
 }

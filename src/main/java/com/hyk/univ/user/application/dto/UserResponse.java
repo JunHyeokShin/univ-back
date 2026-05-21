@@ -6,14 +6,15 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.hyk.univ.user.domain.Role;
 import com.hyk.univ.user.domain.User;
 
+@JsonInclude(Include.NON_NULL)
 public record UserResponse(
     Long id,
     String loginId,
     String name,
     String contact,
     Role role,
-    @JsonInclude(Include.NON_NULL) String studentNumber,
-    @JsonInclude(Include.NON_NULL) String professorNumber,
+    String studentNumber,
+    String professorNumber,
     String department
 ) {
 
