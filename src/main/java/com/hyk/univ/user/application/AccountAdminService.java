@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hyk.univ.common.exception.BusinessException;
 import com.hyk.univ.common.exception.ErrorCode;
+import com.hyk.univ.user.application.dto.CreateProfessorRequest;
 import com.hyk.univ.user.application.dto.CreateStudentRequest;
 import com.hyk.univ.user.application.dto.UserResponse;
 import com.hyk.univ.user.domain.User;
@@ -28,6 +29,15 @@ public class AccountAdminService {
       throw new BusinessException(ErrorCode.USER_ALREADY_EXISTS);
     }
     User user = User.createStudent(studentNumber, this.passwordEncoder.encode(request.password()),
+        request.name(), request.contact(), request.department());
+    return UserResponse.from(this.userRepository.save(user));
+  }
+
+  public UserResponse createProfessor(CreateProfessorRequest request) {
+    if (this.userRepository.existsByLoginId(request.professorNumber())) {
+      throw new BusinessException(ErrorCode.USER_ALREADY_EXISTS);
+    }
+    User user = User.createProfessor(request.professorNumber(), this.passwordEncoder.encode(request.password()),
         request.name(), request.contact(), request.department());
     return UserResponse.from(this.userRepository.save(user));
   }

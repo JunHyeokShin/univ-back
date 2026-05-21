@@ -1,5 +1,8 @@
 package com.hyk.univ.user.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import com.hyk.univ.user.domain.Role;
 import com.hyk.univ.user.domain.User;
 
@@ -9,8 +12,8 @@ public record UserResponse(
     String name,
     String contact,
     Role role,
-    String studentNumber,
-    String professorNumber,
+    @JsonInclude(Include.NON_NULL) String studentNumber,
+    @JsonInclude(Include.NON_NULL) String professorNumber,
     String department
 ) {
 
