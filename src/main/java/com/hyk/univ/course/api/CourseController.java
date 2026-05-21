@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,11 @@ public class CourseController {
   @GetMapping
   public ResponseEntity<List<CourseResponse>> list(@RequestParam(required = false) CourseType type) {
     return ResponseEntity.ok(this.courseService.findAllOpen(type));
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<CourseResponse> get(@PathVariable Long id) {
+    return ResponseEntity.ok(this.courseService.findById(id));
   }
 
   @PreAuthorize("hasRole('ADMIN')")

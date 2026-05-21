@@ -31,6 +31,11 @@ public class CourseService {
     return courses.stream().map(CourseResponse::from).toList();
   }
 
+  public CourseResponse findById(Long id) {
+    return this.courseRepository.findById(id).map(CourseResponse::from)
+        .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
+  }
+
   @Transactional
   public CourseResponse openCourse(CreateCourseRequest request) {
     this.userRepository.findById(request.professorId())
