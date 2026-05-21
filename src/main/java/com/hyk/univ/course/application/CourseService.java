@@ -1,5 +1,7 @@
 package com.hyk.univ.course.application;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,7 @@ import com.hyk.univ.course.application.dto.CourseResponse;
 import com.hyk.univ.course.application.dto.CreateCourseRequest;
 import com.hyk.univ.course.domain.Course;
 import com.hyk.univ.course.domain.CourseRepository;
+import com.hyk.univ.course.domain.CourseType;
 import com.hyk.univ.user.domain.Role;
 import com.hyk.univ.user.domain.UserRepository;
 
@@ -20,6 +23,13 @@ public class CourseService {
 
   private final CourseRepository courseRepository;
   private final UserRepository userRepository;
+
+  public List<CourseResponse> findAllOpen(CourseType type) {
+    List<Course> courses = (type == null)
+        ? this.courseRepository.findAllOpen()
+        : this.courseRepository.findByType(type);
+    return courses.stream().map(CourseResponse::from).toList();
+  }
 
   @Transactional
   public CourseResponse openCourse(CreateCourseRequest request) {
