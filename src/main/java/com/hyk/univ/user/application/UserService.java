@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hyk.univ.common.exception.BusinessException;
 import com.hyk.univ.common.exception.ErrorCode;
+import com.hyk.univ.user.application.dto.UpdateMyInfoRequest;
 import com.hyk.univ.user.application.dto.UserResponse;
 import com.hyk.univ.user.domain.User;
 import com.hyk.univ.user.domain.UserRepository;
@@ -23,6 +24,18 @@ public class UserService {
     User user = this.userRepository.findById(userId)
         .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     return UserResponse.from(user);
+  }
+
+  @Transactional
+  public void updateMyInfo(Long userId, UpdateMyInfoRequest request) {
+    User user = this.userRepository.findById(userId)
+        .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    if (request.password() != null && !request.password().isBlank()) {
+      user.updatePassword(this.passwordEncoder.encode(request.password()));
+    }
+    if (request.contact() != null) {
+      user.updateContact(request.contact());
+    }
   }
 
 }
