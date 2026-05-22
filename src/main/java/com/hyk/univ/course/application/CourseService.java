@@ -59,4 +59,18 @@ public class CourseService {
     course.close();
   }
 
+  @Transactional
+  public void increaseEnrollment(Long courseId) {
+    Course course = this.courseRepository.findById(courseId)
+        .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
+    course.increaseEnrollment();
+  }
+
+  @Transactional
+  public void decreaseEnrollment(Long courseId) {
+    Course course = this.courseRepository.findById(courseId)
+        .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
+    course.decreaseEnrollment();
+  }
+
 }
