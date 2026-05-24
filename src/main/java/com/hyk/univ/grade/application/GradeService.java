@@ -62,6 +62,7 @@ public class GradeService {
   }
 
   @Transactional
+  @RequireMode(AcademicMode.GRADING)
   public GradeResponse updateAttendance(Long professorId, UpdateAttendanceRequest request) {
     Course course = ensureOwnCourse(professorId, request.courseId());
     Grade grade = this.gradeRepository
