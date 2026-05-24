@@ -46,11 +46,11 @@ public class EnrollmentService {
     this.enrollmentPolicy.checkDuplicate(already);
 
     List<Enrollment> existings = this.enrollmentRepository.findByStudentIdAndSemester(studentId, course.getSemester());
-    int currentTotalCrdeit = existings.stream()
+    int currentTotalCredit = existings.stream()
         .map(existing ->
             this.courseRepository.findById(existing.getCourseId()).map(Course::getCredit).orElse(0))
         .mapToInt(Integer::intValue).sum();
-    this.enrollmentPolicy.checkCreditLimit(currentTotalCrdeit, course.getCredit());
+    this.enrollmentPolicy.checkCreditLimit(currentTotalCredit, course.getCredit());
 
     course.increaseEnrollment();
 
