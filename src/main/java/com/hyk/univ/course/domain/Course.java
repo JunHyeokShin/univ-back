@@ -76,11 +76,11 @@ public class Course {
   }
 
   public void increaseEnrollment() {
-    if (isFull()) {
-      throw new BusinessException(ErrorCode.COURSE_FULL);
-    }
     if (this.status == CourseStatus.CLOSED) {
       throw new BusinessException(ErrorCode.COURSE_CLOSED);
+    }
+    if (isFull()) {
+      throw new BusinessException(ErrorCode.COURSE_FULL);
     }
     this.currentEnrollment++;
   }
