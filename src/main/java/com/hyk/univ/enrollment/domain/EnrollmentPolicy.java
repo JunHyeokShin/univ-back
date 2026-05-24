@@ -10,10 +10,10 @@ public class EnrollmentPolicy {
 
   public static final int MAX_CREDIT_PER_SEMESTER = 18;
 
-  public void checkCreditLimit(int currentTotalCredit, int addtionalCredit) {
-    if (currentTotalCredit + addtionalCredit > MAX_CREDIT_PER_SEMESTER) {
+  public void checkCreditLimit(int currentTotalCredit, int additionalCredit) {
+    if (currentTotalCredit + additionalCredit > MAX_CREDIT_PER_SEMESTER) {
       throw new BusinessException(ErrorCode.CREDIT_LIMIT_EXCEEDED,
-          "current=" + currentTotalCredit + ", adding=" + addtionalCredit + ", limit=" + MAX_CREDIT_PER_SEMESTER);
+          "current=" + currentTotalCredit + ", adding=" + additionalCredit + ", limit=" + MAX_CREDIT_PER_SEMESTER);
     }
   }
 
