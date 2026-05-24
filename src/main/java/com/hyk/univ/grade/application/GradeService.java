@@ -1,7 +1,6 @@
 package com.hyk.univ.grade.application;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,18 +32,18 @@ public class GradeService {
 
   public List<GradeResponse> findMyGrades(Long studentId) {
     return this.gradeRepository.findByStudentId(studentId).stream()
-        .map(GradeResponse::from).collect(Collectors.toList());
+        .map(GradeResponse::from).toList();
   }
 
   public List<GradeResponse> findMyGradesBySemester(Long studentId, String semester) {
     return this.gradeRepository.findByStudentIdAndSemester(studentId, semester).stream()
-        .map(GradeResponse::from).collect(Collectors.toList());
+        .map(GradeResponse::from).toList();
   }
 
   public List<GradeResponse> findByCourse(Long professorId, Long courseId) {
     ensureOwnCourse(professorId, courseId);
     return this.gradeRepository.findByCourseId(courseId).stream()
-        .map(GradeResponse::from).collect(Collectors.toList());
+        .map(GradeResponse::from).toList();
   }
 
   @Transactional
